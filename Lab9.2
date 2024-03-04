@@ -1,0 +1,26 @@
+from flask import Flask
+import RPi.GPIO as GPIO
+app = Flask(__name__)
+LEDG = 17
+LEDR = 27
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LEDR,GPIO.OUT)
+GPIO.setup(LEDG,GPIO.OUT)
+@app.route('/<color>/<opt>')
+def cal(color, opt):
+    if color == 'red' and opt == 'on':
+        ans = color + opt
+        GPIO.output (LEDR,True)
+    elif color == 'red' and opt == 'off':
+        ans = color + opt
+        GPIO.output (LEDR,False)
+    elif color == 'green' and opt == 'on':
+        ans = color + opt
+        GPIO.output (LEDG,True)
+    elif color == 'green' and opt == 'off':
+        ans = color + opt
+        GPIO.output (LEDG,False)     
+    return f'ANS:{ans}'   
+
+if __name__ == '__main__' :
+    app.run(debug = True, host ='0.0.0.0')
